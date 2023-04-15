@@ -14,13 +14,13 @@ extension View {
     
     ///
     public func bubblify
-        (color: Color = .white,
+        (color explicitColor: Color? = nil,
          cornerRadius: CGFloat = 8)
     -> some View {
         
         ///
         self.bubblify(
-            color: color,
+            color: explicitColor,
             shape: RoundedRectangle(cornerRadius: cornerRadius)
         )
     }
@@ -28,17 +28,56 @@ extension View {
     ///
     func bubblify
         <S: Shape>
-        (color: Color = .white,
+        (color explicitColor: Color? = nil,
          shape: S)
     -> some View {
         
         ///
-        self
-            .clipShape(shape)
-            .background(
-                shape
-                    .fill(color)
-                    .shadow(radius: 2, y: 1)
-            )
+        ColorSchemeAppropriateBackroundColor { colorSchemeAppropriateBackgroundColor in
+            self
+                .clipShape(shape)
+                .background(
+                    shape
+                        .fill(explicitColor ?? colorSchemeAppropriateBackgroundColor)
+                        .shadow(radius: 2, y: 1)
+                )
+        }
     }
+}
+
+///
+fileprivate struct ColorSchemeAppropriateBackroundColor <Body: View>: View {
+    
+    ///
+    @Environment(\.colorScheme)
+    private var colorScheme: ColorScheme
+    
+    ///
+    init (generateBody: @escaping (Color)->Body) {
+        self.generateBody = generateBody
+    }
+    
+    ///
+    let generateBody: (Color)->Body
+    
+    ///
+    var body: some View {
+        generateBody(color)
+    }
+    
+    ///
+    private var color: Color {
+        switch colorScheme {
+        case .light: return .white
+        case .dark: return .charcoal
+        @unknown default: return .white
+        }
+    }
+}
+
+///
+fileprivate extension Color {
+    
+    ///
+    static var charcoal: Self { .init(white: 0.1) }
 }
