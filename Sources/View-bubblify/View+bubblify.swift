@@ -26,7 +26,7 @@ extension View {
     }
     
     ///
-    func bubblify
+    public func bubblify
         <S: Shape>
         (color explicitColor: Color? = nil,
          shape: S)
