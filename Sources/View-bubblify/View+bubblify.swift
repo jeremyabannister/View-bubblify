@@ -27,6 +27,19 @@ extension View {
     
     ///
     public func bubblify
+        (content explicitContent: some ShapeStyle,
+         cornerRadius: CGFloat = 8)
+    -> some View {
+        
+        ///
+        self.bubblify(
+            content: explicitContent,
+            shape: RoundedRectangle(cornerRadius: cornerRadius)
+        )
+    }
+    
+    ///
+    public func bubblify
         <S: Shape>
         (color explicitColor: Color? = nil,
          shape: S)
@@ -34,14 +47,29 @@ extension View {
         
         ///
         ColorSchemeAppropriateBackroundColor { colorSchemeAppropriateBackgroundColor in
-            self
-                .clipShape(shape)
-                .background(
-                    shape
-                        .fill(explicitColor ?? colorSchemeAppropriateBackgroundColor)
-                        .shadow(radius: 2, y: 1)
-                )
+            self.bubblify(
+                content: explicitColor ?? colorSchemeAppropriateBackgroundColor,
+                shape: shape
+            )
         }
+    }
+    
+    ///
+    public func bubblify
+        <S: Shape,
+         Content: ShapeStyle>
+        (content explicitContent: Content,
+         shape: S)
+    -> some View {
+        
+        ///
+        self
+            .clipShape(shape)
+            .background(
+                shape
+                    .fill(explicitContent)
+                    .shadow(radius: 2, y: 1)
+            )
     }
 }
 
