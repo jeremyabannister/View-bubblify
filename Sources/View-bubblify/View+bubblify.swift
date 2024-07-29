@@ -6,17 +6,13 @@
 //
 
 ///
-@_exported import SwiftUI
-
-
-///
 extension View {
     
     ///
-    public func bubblify
-        (color explicitColor: Color? = nil,
-         cornerRadius: CGFloat = 8)
-    -> some View {
+    public func bubblify(
+        color explicitColor: Color? = nil,
+        cornerRadius: CGFloat = 8
+    ) -> some View {
         
         ///
         self.bubblify(
@@ -26,10 +22,10 @@ extension View {
     }
     
     ///
-    public func bubblify
-        (content explicitContent: some ShapeStyle,
-         cornerRadius: CGFloat = 8)
-    -> some View {
+    public func bubblify(
+        content explicitContent: some ShapeStyle,
+        cornerRadius: CGFloat = 8
+    ) -> some View {
         
         ///
         self.bubblify(
@@ -39,11 +35,12 @@ extension View {
     }
     
     ///
-    public func bubblify
-        <S: Shape>
-        (color explicitColor: Color? = nil,
-         shape: S)
-    -> some View {
+    public func bubblify<
+        S: Shape
+    >(
+        color explicitColor: Color? = nil,
+        shape: S
+    ) -> some View {
         
         ///
         ColorSchemeAppropriateBackroundColor { colorSchemeAppropriateBackgroundColor in
@@ -55,12 +52,13 @@ extension View {
     }
     
     ///
-    public func bubblify
-        <S: Shape,
-         Content: ShapeStyle>
-        (content explicitContent: Content,
-         shape: S)
-    -> some View {
+    public func bubblify<
+        S: Shape,
+        Content: ShapeStyle
+    >(
+        content explicitContent: Content,
+        shape: S
+    ) -> some View {
         
         ///
         self
@@ -74,14 +72,14 @@ extension View {
 }
 
 ///
-fileprivate struct ColorSchemeAppropriateBackroundColor <Body: View>: View {
+private struct ColorSchemeAppropriateBackroundColor<Body: View>: View {
     
     ///
     @Environment(\.colorScheme)
     private var colorScheme: ColorScheme
     
     ///
-    init (generateBody: @escaping (Color)->Body) {
+    init(generateBody: @escaping (Color)->Body) {
         self.generateBody = generateBody
     }
     
@@ -104,7 +102,7 @@ fileprivate struct ColorSchemeAppropriateBackroundColor <Body: View>: View {
 }
 
 ///
-fileprivate extension Color {
+private extension Color {
     
     ///
     static var charcoal: Self { .init(white: 0.1) }
