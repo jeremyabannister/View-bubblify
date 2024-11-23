@@ -1,10 +1,7 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
-///
 import PackageDescription
 
-
-///
 let package = Package(
     name: "View-bubblify",
     platforms: [.macOS(.v10_15), .iOS(.v13), .watchOS(.v6)],
